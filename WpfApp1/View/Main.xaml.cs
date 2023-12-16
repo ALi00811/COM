@@ -56,7 +56,7 @@ namespace WpfApp1.View
                 com.SendData(opCode.P10, Value, 1);
 
                 //Create Json File
-                SerializeJson jsonfile = new SerializeJson(com, Value, opCode.P10.ToString());
+                SerializeJson jsonfile = new SerializeJson(com, Value, opCode.P10.ToString(),true);
 
                 //Read Json File
                 var jsonfile2 = new DeserializeJson();

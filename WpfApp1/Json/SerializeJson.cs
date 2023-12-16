@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Windows;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace WpfApp1.Json
 {
@@ -18,8 +19,11 @@ namespace WpfApp1.Json
         private string data { get; set; }
         private string crc { get; set; }
 
-        public SerializeJson(ClassComConnection com, int value, string opcode)
+        public JsonModel Data { get; set; }
+        bool Access;
+        public SerializeJson(ClassComConnection com, int value, string opcode,bool SaveFileJson)
         {
+            Access = SaveFileJson;
             try
             {
                 foreach (var item in com.GetInffo)
@@ -53,12 +57,18 @@ namespace WpfApp1.Json
                 };
 
                 // --------------------- 
-                string json = JsonConvert.SerializeObject(Createfile);
-                string exePath = Assembly.GetEntryAssembly().Location;
-                string directory = Path.GetDirectoryName(exePath);
-                string filePath = Path.Combine(directory, "inffo.json");
-                File.WriteAllText(filePath, json);
+                if (Access)
+                {
+                    string json = JsonConvert.SerializeObject(Createfile);
+                    string exePath = Assembly.GetEntryAssembly().Location;
+                    string directory = Path.GetDirectoryName(exePath);
+                    string filePath = Path.Combine(directory, "inffo.json");
+                    File.WriteAllText(filePath, json);
+                }
+                
 
+                // ---------------------
+                Data = Createfile;
 
             }
             catch (Exception)
