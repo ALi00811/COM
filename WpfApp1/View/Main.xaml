@@ -20,7 +20,7 @@
         <Border CornerRadius="10"
                 BorderThickness="1"
                 Opacity=".85">
-            
+
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="#462AD8" Offset="0"/>
@@ -89,7 +89,7 @@
                                 </Border>
                             </ControlTemplate>
                         </Button.Template>
-                        
+
                     </Button>
 
                     <Button x:Name="btnClose"
@@ -102,40 +102,86 @@
                             Grid.Column="2"
                             Click="btnClose_Click">
 
-                            <Button.Style>
-                                <Style TargetType="Button">
+                        <Button.Style>
+                            <Style TargetType="Button">
                                 <Setter Property="Background" Value="#C62DAE"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#C62DAE"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#C62DAE"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
 
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Width="18" Height="18"
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="18" Height="18"
                                         CornerRadius="9"
                                         Background="{TemplateBinding Background}">
                                     <ContentPresenter VerticalAlignment="Center"
                                                         HorizontalAlignment="Center"/>
 
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
                 </Grid>
+
                 <StackPanel Width="250"
                             Grid.Row="2"
                             Orientation="Vertical"
-                            Margin="0,35,0,0">
-                    <TextBlock Text="MAC Address :" Foreground="White"></TextBlock>
-                    <TextBox Background="Transparent" BorderBrush="#C62DAE" Height="30" IsReadOnly="True"></TextBox>
-                    <Border CornerRadius="20"  Margin="0,380,0,0">
-                        <Button Height="30" BorderBrush="#C62DAE" Content="Connect" Background="Transparent" Cursor="Hand" Foreground="White" FontSize="16"></Button>
-                    </Border>
+                            HorizontalAlignment="Left"
+                            Margin="0,15,0,0">
+
+                    <Expander Margin="5" Cursor="Hand" Header="Submit Infomation : " Foreground="White" FontSize="15" IsExpanded="True" Background="#8A16C1">
+                        <StackPanel>
+                            <TextBlock Text="Enter Value :" Foreground="White"></TextBlock>
+                            <TextBox Margin="5" Background="Transparent" Name="tbValue" Foreground="White" BorderBrush="#C62DAE" Height="30" ></TextBox>
+
+                            <TextBlock Margin="0,5,0,0" Text="Enter SerialPort : " Foreground="White" ></TextBlock>
+                            <TextBox Margin="5" Background="Transparent" Name="tbSerialPort" Height="30" Foreground="White" BorderBrush="#C62DAE" ></TextBox>
+
+                            <TextBlock Margin="0,5,0,0" Text="Defult SerialPort: 45812 " Foreground="White" ></TextBlock>
+                            <Button Margin="15" Height="30" BorderBrush="#C62DAE" Content="Analize" Background="Transparent" Cursor="Hand" Foreground="White" FontSize="16" Name="btnAnalize" Click="btnAnalize_Click"></Button>
+
+                        </StackPanel>
+
+                    </Expander>
                 </StackPanel>
+                
+                <StackPanel Margin="269,15,0,0" Grid.Row="1">
+
+                    <GroupBox Margin="0,0,15,0" Header="SHOW INFORMATION" Foreground="White" FontSize="12" Height="230">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <Label Foreground="White" FontSize="15" Content="HashCode : " HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Foreground="White" FontSize="15" Content="Header : " HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Foreground="White" FontSize="15" Content="Frame counter : " HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Foreground="White" FontSize="15" Content="OpCode : " HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Foreground="White" FontSize="15" Content="Data : " HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Foreground="White" FontSize="15" Content="CRC : " HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <Label Name="lblHashCode" Foreground="White" FontSize="12" Content="" HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Name="lblHeader" Foreground="White" FontSize="15" Content="" HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Name="lblFrameCounter" Foreground="White" FontSize="15" Content="" HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Name="lblOpCode" Foreground="White" FontSize="15" Content="" HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Name="lblData" Foreground="White" FontSize="15" Content="" HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                                <Label Name="lblCrc" Foreground="White" FontSize="15" Content="" HorizontalAlignment="Left"   VerticalAlignment="Top"/>
+                            </StackPanel>
+
+                        </Grid>
+
+                    </GroupBox>
+                    <Label Foreground="YellowGreen" FontSize="15" Content="" Name="lblPatch"></Label>
+                </StackPanel>
+
             </Grid>
 
         </Border>
