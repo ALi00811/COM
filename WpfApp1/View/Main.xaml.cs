@@ -58,11 +58,11 @@ namespace WpfApp1.View
                 com.SendData(opCode.P10, Value, 1);
 
                 //Create Json File
-                await WriteFile();
+                await WriteFileAsynk();
 
                 //Read Json File
                 jsonfile2 = new DeserializeJson();
-                var result = await ReadFile();
+                var result = await ReadFileAsynk();
 
                 // Set Value as Json File
                 lblHashCode.Content = result.HashCode;
@@ -76,7 +76,7 @@ namespace WpfApp1.View
             }
         }
 
-        private async Task WriteFile()
+        private async Task WriteFileAsynk()
         {
             await Task.Run(() =>
             {
@@ -84,7 +84,7 @@ namespace WpfApp1.View
             });
         }
 
-        private async Task<JsonModel> ReadFile()
+        private async Task<JsonModel> ReadFileAsynk()
         {
             return await Task.Run(async () =>
             {
