@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace WpfApp1.View
     public partial class LoginView : Window
     {
         ClassComConnection com;
+        DeserializeJson jsonfile2;
         public string SerialPort { get; set; }
         public int Value { get; set; }
         public LoginView()
@@ -40,10 +42,10 @@ namespace WpfApp1.View
             Application.Current.Shutdown();
         }
 
-        private void btnAnalize_Click(object sender, RoutedEventArgs e)
+        private async void btnAnalize_Click(object sender, RoutedEventArgs e)
         {
             // Set Defult Value
-            if (tbSerialPort.Text == "") tbSerialPort.Text = "45812"; 
+            if (tbSerialPort.Text == "") tbSerialPort.Text = "45812";
 
             if (!string.IsNullOrEmpty(tbValue.Text) && !string.IsNullOrEmpty(tbSerialPort.Text))
             {
@@ -56,11 +58,11 @@ namespace WpfApp1.View
                 com.SendData(opCode.P10, Value, 1);
 
                 //Create Json File
-                SerializeJson jsonfile = new SerializeJson(com, Value, opCode.P10.ToString(),true);
+                await WriteFile();
 
                 //Read Json File
-                var jsonfile2 = new DeserializeJson();
-                var result = jsonfile2.Deserialize();
+                jsonfile2 = new DeserializeJson();
+                var result = await ReadFile();
 
                 // Set Value as Json File
                 lblHashCode.Content = result.HashCode;
@@ -70,8 +72,25 @@ namespace WpfApp1.View
                 lblData.Content = result.Data;
                 lblCrc.Content = result.Crc;
                 lblPatch.Content = $"Patch Json File : {jsonfile2.Result}";
-                
+
             }
+        }
+
+        private async Task WriteFile()
+        {
+            await Task.Run(() =>
+            {
+                SerializeJson jsonfile = new SerializeJson(com, Value, opCode.P10.ToString(), true);
+            });
+        }
+
+        private async Task<JsonModel> ReadFile()
+        {
+            return await Task.Run(async () =>
+            {
+                var Result = jsonfile2.Deserialize();
+                return Result;
+            });
         }
     }
 }
